@@ -1,9 +1,10 @@
 # linkvoluntario
 
-O projeto foi desenvolvido apartir da arquitura proposta pelo Microsoft MVP Eduardo Pires.
+O projeto foi desenvolvido apartir da arquitetura proposta pelo Microsoft MVP Eduardo Pires.
 no vídeo: https://www.youtube.com/watch?v=i9Il79a2uBU
 
 Algumas alterações foram feitas visando a simplificação, foram elas:
+
 -> Remoção da camada Application
 -> Não foi utilizada validação por Claims devido a simplicidade do projeto
 
