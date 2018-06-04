@@ -10,5 +10,9 @@ namespace LinkVoluntario.Domain.Interfaces
         bool Delete(long InstitutionId);
         bool Login(string user, string password);
         IList<Institution> ListAll();
+        IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade);
+        Institution GetById(int institutionId);
+        Institution GetByPhotoId(int photoId);
+        Institution GetByUserEmail(string email);
     }
 }

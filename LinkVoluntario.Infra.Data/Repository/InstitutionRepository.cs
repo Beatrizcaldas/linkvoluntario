@@ -14,8 +14,8 @@ namespace LinkVoluntario.Infra.Data.Repository
 
         public InstitutionRepository()
         {
-            
-        }     
+
+        }
 
         public bool Delete(long InstitutionId)
         {
@@ -24,20 +24,20 @@ namespace LinkVoluntario.Infra.Data.Repository
                         select usr).First();
 
             var category = (from cat in Context.Category
-                         where cat.InstitutionId == InstitutionId
-                         select cat).ToList();
-            
+                            where cat.InstitutionId == InstitutionId
+                            select cat).ToList();
+
             Context.Category.RemoveRange(category);
 
             var address = (from institution in Context.Address
-                        where institution.InstitutionId == InstitutionId
-                        select institution).ToList();
+                           where institution.InstitutionId == InstitutionId
+                           select institution).ToList();
 
             Context.Address.RemoveRange(address);
 
             var Phone = (from phone in Context.Phone
-                           where phone.InstitutionId == InstitutionId
-                           select phone).ToList();
+                         where phone.InstitutionId == InstitutionId
+                         select phone).ToList();
 
             Context.Phone.RemoveRange(Phone);
 
@@ -54,10 +54,10 @@ namespace LinkVoluntario.Infra.Data.Repository
             Context.User.Remove(userTbUser);
 
             var item = (from institution in Context.Institution
-                       where institution.InstitutionId == InstitutionId
-                       select institution).First();          
+                        where institution.InstitutionId == InstitutionId
+                        select institution).First();
 
-            Context.Institution.Remove(item);   
+            Context.Institution.Remove(item);
 
             Commit();
 
@@ -96,6 +96,64 @@ namespace LinkVoluntario.Infra.Data.Repository
         public IList<Institution> ListAll()
         {
             return Context.Institution.ToList();
+        }
+
+        public IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade)
+        {
+            var query = from inst in Context.Institution
+                        select inst;
+
+            if (selectedCategories != null && selectedCategories.Any())
+            {
+                query = from item in Context.Institution
+                        from cat in Context.Category
+                        where item.InstitutionId == cat.InstitutionId
+                        where selectedCategories.Contains(cat.CategoryId)
+                        select item;
+            }
+
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                query = from item in Context.Institution
+                        where item.FantasyName.Contains(nome)
+                        select item;
+            }
+
+            if (!string.IsNullOrWhiteSpace(localidade))
+            {
+                query = from item in Context.Institution
+                        from address in Context.Address
+                        where item.InstitutionId == address.InstitutionId
+                        where (address.City.Contains(localidade) || address.State.Contains(localidade))
+                        select item;
+            }
+
+            return query.ToList();
+        }
+
+        public Institution GetById(int institutionId)
+        {
+            return Context.Institution.Where(inst => inst.InstitutionId == institutionId).FirstOrDefault();
+        }
+
+        public Institution GetByPhotoId(int photoId)
+        {
+            var query = (from institution in Context.Institution
+                         from photo in Context.Photo
+                         where institution.InstitutionId == photo.InstitutionId
+                         where photo.PhotoId == photoId
+                         select institution);
+
+            return query.FirstOrDefault();
+        }
+
+        public Institution GetByUserEmail(string email)
+        {
+            var query = (from institution in Context.Institution
+                         where institution.User.Email == email
+                         select institution);
+
+            return query.FirstOrDefault();
         }
     }
 }

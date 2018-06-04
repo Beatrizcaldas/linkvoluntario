@@ -35,5 +35,25 @@ namespace LinkVoluntario.Domain.Services
         {
             return _institutionRepository.ListAll();
         }
+        
+        public IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade)
+        {
+            return _institutionRepository.ListByFilters(selectedCategories, nome, localidade);
+        }
+
+        public Institution GetById(int InstitutionId)
+        {
+            return _institutionRepository.GetById(InstitutionId);
+        }
+
+        public Institution GetByPhotoId(int photoId)
+        {
+            return _institutionRepository.GetByPhotoId(photoId);
+        }
+
+        public Institution GetByUserEmail(string email)
+        {
+            return _institutionRepository.GetByUserEmail(email);
+        }
     }
 }

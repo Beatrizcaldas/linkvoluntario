@@ -30,7 +30,7 @@ namespace LinkVoluntario.Controllers
         [HttpGet]
         public ActionResult DetailInstitution(int InstitutionId)
         {
-            var institution = institutionService.ListAll().Where(m => m.InstitutionId == InstitutionId).First();
+            var institution = institutionService.GetById(InstitutionId);
 
             var model = ParseToViewModel(institution);
 
@@ -70,17 +70,12 @@ namespace LinkVoluntario.Controllers
                 new SelectListItem {Text = "Auxílio - Família", Value = "7"}
             };
         }
-
-        [HttpGet]
-        public ActionResult SearchInstitutions(SearchFilterViewModel model)
-        {
-            return View();
-        }
-
+        
         [HttpPost]
-        public ActionResult SearchInstitutions(object filters)
+        public ActionResult SearchInstitutions(SearchFilterViewModel filter)
         {
-            var lista = institutionService.ListAll();
+            var lista = institutionService.ListByFilters(filter.SelectedCategories, filter.Nome, filter.Localidade);
+            
 
             var model = ParseToResumedViewModel(lista);
 
@@ -176,7 +171,7 @@ namespace LinkVoluntario.Controllers
         [HttpGet]
         public FileStreamResult GetImage(int photoId)
         {
-            var institution = institutionService.ListAll().Where(i => i.Photos.Count(p => p.PhotoId == photoId) > 0).First();
+            var institution = institutionService.GetByPhotoId(photoId);
 
             var array = institution.Photos.Where(c => c.PhotoId == photoId).First().Binary;
 

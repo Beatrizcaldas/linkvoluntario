@@ -362,7 +362,7 @@ namespace LinkVoluntario.Controllers
         {
             var user = Session["UsuarioLogado"].ToString();
 
-            var institution = institutionService.ListAll().Where(e => e.User.Email == user).First();
+            var institution = institutionService.GetByUserEmail(user);
 
             institutionService.Delete(institution.InstitutionId);
 
@@ -370,7 +370,6 @@ namespace LinkVoluntario.Controllers
 
             return View();
         }
-
 
     }
 }
