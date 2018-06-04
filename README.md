@@ -10,6 +10,6 @@ Algumas alterações foram feitas visando a simplificação, foram elas:
 
 Os recursos utilizados foram:
 
-Asp.NET MVC, Arquitetura no padrão DDD,Entity Framework utilizando Code First, SQL SERVER
+Asp.NET MVC, Arquitetura no padrão DDD,Entity Framework utilizando Code First, SQL SERVER e IOC - Injeção de dependência (utilizando Simple Injector)
 
 O projeto foi disponibilizado no github, em: https://github.com/Beatrizcaldas/linkvoluntario
