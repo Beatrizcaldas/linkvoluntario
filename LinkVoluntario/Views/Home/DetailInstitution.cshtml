@@ -1,0 +1,70 @@
+﻿@model LinkVoluntario.ViewModels.InstitutionViewModel
+@{
+    ViewBag.Title = "Detalhes da instituição";
+}
+
+
+<div class="container">
+    <div class="well">
+        <h2 class="text-center">@Model.FantasyName</h2>
+        <br />
+        <div class="text-center">
+            @Model.Description
+        </div>
+        <br />
+        @*<div>
+            @foreach (var item in Model.Category)
+            {
+                <label>@item.Text</label>
+            }
+        </div>*@
+        @foreach (var photo in Model.PhotosModel)
+        {
+            <img class="card-img-top" src="@Url.Action("GetImage", "Home", new { photoId = photo.PhotoId })" width="286" height="180" alt="Card image cap">
+        }
+
+        <br /><br />
+        <b>Endereços:</b> <br />
+        @foreach (var address in Model.Adresses)
+        {
+            <label>Rua:  @address.Street Número: @address.Number  Cidade:  @address.City   Estado: @address.State </label>
+        }<br /><br />
+        <b>Telefones:</b> <br />
+        @foreach (var phone in Model.Phones)
+        {
+            <label>@phone.AreaCode - @phone.Number  </label>
+        }
+        <br />
+        <hr />
+        <h3 class="text-center">Ficou interessado? Entre em contato!</h3><br />
+
+        <form method="post" action="@Url.Action("SendEmail", "Home")">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label for="Name">Seu nome:</label>
+                <input name="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Email">Seu Email:</label>
+                <input type="email" name="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Subject">Assunto:</label>
+                <input type="text" name="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Message">Mensagem:</label>
+                <textarea rows="4" name="Message" class="form-control"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-envelope"></i> Enviar mensagem</button>
+                <div class="text-success"></div>
+            </div>
+        </form>
+    </div>
+</div>
+

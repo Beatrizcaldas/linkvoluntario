@@ -1,0 +1,33 @@
+﻿@model LinkVoluntario.ViewModels.SearchFilterViewModel
+<form method="post" action="@Url.Action("SearchInstitutions", "Home")">
+    <br /><br />
+    <div class="form-group">
+        <label class="control-label col-sm-2"> Nome</label>
+        @Html.EditorFor(m => m.Nome, null, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Localidade</label>
+        @Html.EditorFor(m => m.Localidade, null, new { @class = "form-control" })       
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2"> Categoria</label><br />
+        <div class="form-group" style="padding-left:20px;">
+            @foreach (var categoria in Model.Categorias)
+            {
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                               name="SelectedCategories"
+                               value="@categoria.Value" />
+                        @categoria.Text
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <p>
+            <input type="submit" class="btn btn-primary " value="Pesquisar" />
+        </p>
+    </div>
+</form>

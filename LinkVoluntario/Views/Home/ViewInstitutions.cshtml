@@ -1,0 +1,27 @@
+﻿@model IList<LinkVoluntario.ViewModels.InstitutionResumedViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="row col-md-offset-2">
+    <h3>Instituições encontradas</h3>
+    <hr />
+    <br /><br />
+    @foreach (var institution in Model)
+    {
+        foreach (var photo in institution.PhotosModel)
+        {
+            <div class="col-sm-4" style="padding-bottom:10px;">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@Url.Action("GetImage","Home", new { photoId = photo.PhotoId})" width="286" height="180" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@institution.FantasyName</h5>
+                        <p class="card-text">@institution.Description</p>
+                        <a href="@Url.Action("DetailInstitution","Home", new { InstitutionId = @institution.InstitutionId })" class="btn btn-primary">Visualizar detalhes</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    } <br />
+</div>
+<br />  <br />  

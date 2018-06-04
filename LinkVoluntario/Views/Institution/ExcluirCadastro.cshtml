@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "ExcluirCadastro";
+}
+<div class="container text-center">
+    <form method="post" action="@Url.Action("ConfirmedDelete","Institution")">
+        <h2>Você têm certeza que deseja excluir o seu cadastro?</h2>
+        <br />
+        <p>
+            Ao clicar em Excluir Cadastro, seu cadastro será deletado e essa operação não poderá ser desfeita!
+        </p>
+        <button type="submit" class="btn btn-primary">Excluir Cadastro</button>
+    </form>
+</div>

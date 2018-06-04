@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+Seja bem vindo <b>@ViewBag.Usuario</b><br /><br />
+<hr />
+
+<div class="text-center">
+    <form method="post" action="@Url.Action("EditarCadastro","Institution")">
+        <input type="submit" class="btn btn-primary" value="Editar meu cadastro" />
+    </form>
+    <br />
+    <br />
+    <form method="post" action="@Url.Action("ExcluirCadastro","Institution")">
+        <input type="submit" class="btn btn-primary" value="Excluir meu cadastro" />
+    </form>
+</div>

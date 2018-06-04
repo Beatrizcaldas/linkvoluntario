@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Logout";
+}
+<div class="container text-center">
+    <form method="post" action="@Url.Action("ConfirmedLogout","Institution")">
+        <h2>Você deseja sair?</h2>
+        <br />
+        <p>
+            Ao clicar em sair você encerrará sua sessão!
+        </p>
+        <button type="submit" class="btn btn-primary">Sair</button>
+    </form>
+</div>
