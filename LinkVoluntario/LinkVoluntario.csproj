@@ -227,6 +227,7 @@
     <Content Include="Views\Institution\EditarCadastro.cshtml" />
     <Content Include="Views\Institution\RecoverPassword.cshtml" />
     <Content Include="Views\Institution\MensagemSucessoPasswordEnviado.cshtml" />
+    <Content Include="Views\Institution\MensagemSucessoAlteracaoCadastro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

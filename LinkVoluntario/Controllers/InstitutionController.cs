@@ -277,14 +277,27 @@ namespace LinkVoluntario.Controllers
         {
             var email = Session["UsuarioLogado"].ToString();
 
-            var model = institutionService.ListAll().Where(m => m.User.Email == email).First();
+            var model = institutionService.GetByUserEmail(email);
 
             var viewModel = ParseToViewModel(model);
 
+            viewModel.Categories = GetCategories();
+         
             return View(viewModel);
         }
 
-
+        [HttpPost]
+        public ActionResult Edit(InstitutionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("MensagemSucessoAlteracaoCadastro");
+            }
+            else
+            {
+                return View("EditarCadastro", model);
+            }
+        }
 
         private InstitutionViewModel ParseToViewModel(Institution institution)
         {
@@ -293,6 +306,8 @@ namespace LinkVoluntario.Controllers
             retorno.InstitutionId = institution.InstitutionId;
             retorno.CNPJ = institution.CNPJ;
             retorno.FantasyName = institution.FantasyName;
+            retorno.SocialName = institution.SocialName;
+            retorno.Email = institution.User.Email;
             retorno.Description = institution.Description;
             retorno.PhotosModel = ParseToPhotoModel(institution.Photos);
             retorno.Phones = ParseToPhoneModel(institution.Phones);
@@ -380,6 +395,17 @@ namespace LinkVoluntario.Controllers
         {
             emailService.ResetPassword(Email, CNPJ);
             return View("MensagemSucessoPasswordEnviado");
+        }
+
+        [HttpGet]
+        public FileStreamResult GetImage(int photoId)
+        {
+            var institution = institutionService.GetByPhotoId(photoId);
+
+            var array = institution.Photos.Where(c => c.PhotoId == photoId).First().Binary;
+
+            var ms = new MemoryStream(array);
+            return new FileStreamResult(ms, "image/jpeg");
         }
     }
 }

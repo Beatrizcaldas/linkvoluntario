@@ -173,9 +173,7 @@ namespace LinkVoluntario.Controllers
             }
 
             return retorno;
-        }
-
-   
+        }   
 
         [HttpGet]
         public FileStreamResult GetImage(int photoId)
