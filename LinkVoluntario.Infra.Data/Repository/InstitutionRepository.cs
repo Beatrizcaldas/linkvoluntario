@@ -66,7 +66,15 @@ namespace LinkVoluntario.Infra.Data.Repository
 
         public bool Edit(Institution institution)
         {
-            throw new NotImplementedException();
+            var item = Context.Institution.Find(institution.InstitutionId);
+
+            item.FantasyName = institution.FantasyName;
+            item.User.Password = institution.User.Password;
+            item.Phones = institution.Phones;
+            item.Adresses = institution.Adresses;
+            item.Description = institution.Description;
+
+            return Context.SaveChanges() > 0;
         }
 
         public bool Register(Institution institution)

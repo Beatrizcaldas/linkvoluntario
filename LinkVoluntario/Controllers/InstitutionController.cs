@@ -138,6 +138,7 @@ namespace LinkVoluntario.Controllers
         {
             var retorno = new Institution();
 
+            retorno.InstitutionId = institution.InstitutionId;
             retorno.CNPJ = institution.CNPJ;
             retorno.FantasyName = institution.FantasyName;
             retorno.SocialName = institution.SocialName;
@@ -152,6 +153,7 @@ namespace LinkVoluntario.Controllers
                 retorno.Phones.Add(
                     new Phone
                     {
+                        InstitutionId = retorno.InstitutionId,
                         AreaCode = fone.AreaCode,
                         Number = fone.Number
                     });
@@ -162,6 +164,7 @@ namespace LinkVoluntario.Controllers
             {
                 retorno.Adresses.Add(new Address
                 {
+                    InstitutionId = retorno.InstitutionId,
                     City = address.City,
                     Number = address.Number,
                     PostalCode = address.PostalCode,
@@ -183,11 +186,14 @@ namespace LinkVoluntario.Controllers
 
             foreach (var item in institution.Photos)
             {
-                Stream stream = item.InputStream;
-                using (var memoryStream = new MemoryStream())
+                if (item != null)
                 {
-                    stream.CopyTo(memoryStream);
-                    retorno.Photos.Add(new Photo { Binary = memoryStream.ToArray() });
+                    Stream stream = item.InputStream;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        stream.CopyTo(memoryStream);
+                        retorno.Photos.Add(new Photo { Binary = memoryStream.ToArray() });
+                    }
                 }
             }
 
@@ -282,7 +288,7 @@ namespace LinkVoluntario.Controllers
             var viewModel = ParseToViewModel(model);
 
             viewModel.Categories = GetCategories();
-         
+
             return View(viewModel);
         }
 
@@ -291,10 +297,20 @@ namespace LinkVoluntario.Controllers
         {
             if (ModelState.IsValid)
             {
+                var institution = ParseCompleteToInstitution(model);
+
+                institutionService.Edit(institution);
+
                 return View("MensagemSucessoAlteracaoCadastro");
             }
             else
             {
+                var model1 = institutionService.GetByUserEmail(model.Email);
+
+                model.Categories = GetCategories();
+                model.PhotosModel = ParseToPhotoModel(model1.Photos);
+                model.Adresses = ParseToAddresModel(model1.Adresses);
+
                 return View("EditarCadastro", model);
             }
         }

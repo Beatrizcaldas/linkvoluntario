@@ -6,17 +6,18 @@
 
 <h2>Editar seu cadastro</h2>
 
-@using (Html.BeginForm("Edit","Institution"))
+@using (Html.BeginForm("Edit", "Institution"))
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(m => m.InstitutionId)
+    @Html.HiddenFor(m => m.CNPJ)
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
                 @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -135,6 +136,10 @@
             <input type="file" name="Photos" multiple />
         </div>
         <div class="form-group">
+            @Html.CheckBoxFor(m => m.AcceptedTermsUse) Aceito os <a data-toggle="modal" data-target="#exampleModalLong" href="#">termos de uso</a> deste site.
+            @Html.ValidationMessageFor(m => m.AcceptedTermsUse, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
             <div class="">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
@@ -144,13 +149,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Excluir imagem</h1>
+                    <h4 class="modal-title">Excluir imagem</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h3>Tem certeza que você deseja excluir esta imagem?</h3>
+                    <p>Tem certeza que você deseja excluir esta imagem?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Sim</button>
