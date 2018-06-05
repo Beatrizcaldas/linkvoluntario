@@ -41,7 +41,16 @@ namespace LinkVoluntario.Controllers
         {
             if (ModelState.IsValid)
             {
-                emailService.SendEmail("contato@linkvoluntario.org", "contato@linkvoluntario.org", "[LinkVoluntario.org] Contato do site", "Assunto: " + model.Subject + "Mensagem:" + model.Message);
+                string body = @"<p style='text-align: justify;'><b>Mensagem de:</b> " + model.Name  + @"</p>
+                                <br>
+                                <p style='text-align: justify;'><b>Assunto:</b> " + model.Subject + @"</p>
+                                <br>
+                                <p style='text-align: justify;'><b>Mensagem:</b> " + model.Message + @"</p>
+                                <br><br>
+                                <p style='text-align: justify;'><b>Responder para:</b> <u>" + model.Email + @"</u></p>";
+
+                emailService.SendEmail("contato@linkvoluntario.org", "contato@linkvoluntario.org", "[LinkVoluntario.org] Contato do site", body);
+
                 return View("EmailEnviadoSucesso");
             }
             else
