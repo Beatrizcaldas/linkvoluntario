@@ -371,5 +371,15 @@ namespace LinkVoluntario.Controllers
             return View();
         }
 
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
+
+        public ActionResult ResendPassword(string Email, string CNPJ)
+        {
+            emailService.ResetPassword(Email, CNPJ);
+            return View("MensagemSucessoPasswordEnviado");
+        }
     }
 }

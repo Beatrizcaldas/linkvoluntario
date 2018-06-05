@@ -225,6 +225,8 @@
     <Content Include="Views\Institution\ConfirmedDelete.cshtml" />
     <Content Include="Views\Home\EmailEnviadoSucesso.cshtml" />
     <Content Include="Views\Institution\EditarCadastro.cshtml" />
+    <Content Include="Views\Institution\RecoverPassword.cshtml" />
+    <Content Include="Views\Institution\MensagemSucessoPasswordEnviado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

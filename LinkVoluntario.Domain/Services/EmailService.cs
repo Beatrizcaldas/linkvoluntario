@@ -16,9 +16,25 @@ namespace LinkVoluntario.Domain.Services
         {
             this.emailRepository = emailRepository;
         }
+
         public bool SendEmail(string from, string to, string subject, string body)
         {
-            return emailRepository.SendEmail(from, to, subject, body); 
+            return emailRepository.SendEmail(from, to, subject, body);
+        }
+
+        public void ResetPassword(string Email, string CNPJ)
+        {
+            var newPass = emailRepository.ResetPassword(Email, CNPJ);
+
+            if (newPass != string.Empty)
+            {
+                string body = "Sua nova senha é: " + newPass;
+
+                emailRepository.SendEmail("contato@linkvoluntario.org",
+                                            Email,
+                                            "LinkVoluntario.org - Nova senha gerada",
+                                            body);
+            }
         }
     }
 }

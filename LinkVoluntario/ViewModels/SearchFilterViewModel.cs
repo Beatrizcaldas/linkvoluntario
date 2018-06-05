@@ -11,6 +11,6 @@ namespace LinkVoluntario.ViewModels
         public string Nome { get; set; }
         public string Localidade { get; set; }
         public IList<SelectListItem> Categorias { get; set; }
-        public IList<int> SelectedCategories { get; set; }
+        public IList<string> SelectedCategories { get; set; }
     }
 }

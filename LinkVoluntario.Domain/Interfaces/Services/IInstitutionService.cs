@@ -14,6 +14,6 @@ namespace LinkVoluntario.Domain.Services
         Institution GetById(int InstitutionId);
         Institution GetByPhotoId(int photoId);
         Institution GetByUserEmail(string email);
-        IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade);
+        IList<Institution> ListByFilters(IList<string> selectedCategories, string nome, string localidade);
     }
 }

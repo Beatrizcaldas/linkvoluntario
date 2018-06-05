@@ -98,7 +98,7 @@ namespace LinkVoluntario.Infra.Data.Repository
             return Context.Institution.ToList();
         }
 
-        public IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade)
+        public IList<Institution> ListByFilters(IList<string> selectedCategories, string nome, string localidade)
         {
             var query = from inst in Context.Institution
                         select inst;
@@ -108,7 +108,7 @@ namespace LinkVoluntario.Infra.Data.Repository
                 query = from item in Context.Institution
                         from cat in Context.Category
                         where item.InstitutionId == cat.InstitutionId
-                        where selectedCategories.Contains(cat.CategoryId)
+                        where selectedCategories.Contains(cat.Description)
                         select item;
             }
 

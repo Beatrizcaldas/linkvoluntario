@@ -13,11 +13,11 @@
 
             <div class="form-group">
                 <label asp-for="Email">Usuário</label>
-                <input id="Email" name="Email" class="form-control" />
+                <input id="Email" name="Email" type="email" required class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Password">Senha</label>
-                <input type="password" name="Password" id="Password" class="form-control" />
+                <input type="password" name="Password" required id="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-warning"></span>
             </div>
             <div class="form-group">
@@ -26,6 +26,7 @@
             <div class="text-danger">@ViewBag.Mensagem</div>
         </form>
         Ainda não possui cadastro? Registre-se agora! <a href="@Url.Action("Register", "Institution")">Clique aqui</a>.
+        <a href="@Url.Action("RecoverPassword", "Institution")">Esqueci minha senha.</a>
     </div>
 
 </div>

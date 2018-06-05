@@ -36,7 +36,7 @@ namespace LinkVoluntario.Domain.Services
             return _institutionRepository.ListAll();
         }
         
-        public IList<Institution> ListByFilters(IList<int> selectedCategories, string nome, string localidade)
+        public IList<Institution> ListByFilters(IList<string> selectedCategories, string nome, string localidade)
         {
             return _institutionRepository.ListByFilters(selectedCategories, nome, localidade);
         }

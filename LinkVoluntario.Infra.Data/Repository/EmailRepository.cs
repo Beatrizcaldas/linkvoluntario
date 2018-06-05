@@ -2,6 +2,8 @@
 using LinkVoluntario.Domain.Interfaces;
 using System.Net;
 using System.Net.Mail;
+using System.Linq;
+using System;
 
 namespace LinkVoluntario.Infra.Data.Repository
 {
@@ -12,7 +14,39 @@ namespace LinkVoluntario.Infra.Data.Repository
         public EmailRepository()
         {
 
-        }   
+        }
+
+        public string ResetPassword(string email, string cNPJ)
+        {
+            var user = (from inst in context.Institution
+                       where inst.CNPJ == cNPJ
+                       where inst.User.Email == email
+                       select inst).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.User.Password = GenerateRandomPass();
+
+                context.SaveChanges();
+
+                return user.User.Password;
+            }
+
+            return string.Empty;
+        }
+
+        private string GenerateRandomPass()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+
+            var result = new string(
+                Enumerable.Repeat(chars, 6)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+
+            return result;
+        }
 
         public bool SendEmail(string from, string to, string subject, string body)
         {
@@ -21,7 +55,7 @@ namespace LinkVoluntario.Infra.Data.Repository
             //define os endereços
             mail.From = new MailAddress(from);
             mail.To.Add(to);
-            mail.To.Add("oliviobecker@gmail.com");
+            //mail.To.Add("oliviobecker@gmail.com");
             mail.To.Add("beatrizcrissouza@gmail.com");
 
             //define o conteúdo
