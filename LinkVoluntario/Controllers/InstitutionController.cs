@@ -184,6 +184,11 @@ namespace LinkVoluntario.Controllers
 
             var listImgs = new List<string>();
 
+            if (institution.NewPhotos != null && institution.NewPhotos.Count > 0)
+            {
+                institution.Photos = institution.NewPhotos;
+            }
+
             foreach (var item in institution.Photos)
             {
                 if (item != null)
@@ -422,6 +427,17 @@ namespace LinkVoluntario.Controllers
 
             var ms = new MemoryStream(array);
             return new FileStreamResult(ms, "image/jpeg");
+        }
+
+        [HttpPost]
+        public JsonResult DeletePhoto(int PhotoId)
+        {
+            institutionService.DeletePhoto(PhotoId);
+
+            return Json(new
+            {
+                Sucesso = true
+            });
         }
     }
 }

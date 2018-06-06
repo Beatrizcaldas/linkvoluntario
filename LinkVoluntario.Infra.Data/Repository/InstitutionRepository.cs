@@ -70,9 +70,38 @@ namespace LinkVoluntario.Infra.Data.Repository
 
             item.FantasyName = institution.FantasyName;
             item.User.Password = institution.User.Password;
+            
+            var address = (from inst in Context.Address
+                           where inst.InstitutionId == item.InstitutionId
+                           select inst).ToList();
+
+            Context.Address.RemoveRange(address);
+
+            var Phone = (from phone in Context.Phone
+                         where phone.InstitutionId == item.InstitutionId
+                         select phone).ToList();
+
+            Context.Phone.RemoveRange(Phone);
+
             item.Phones = institution.Phones;
             item.Adresses = institution.Adresses;
             item.Description = institution.Description;
+
+            foreach (var photo in institution.Photos)
+            {
+                item.Photos.Add(photo);
+            }
+
+            var category = (from cat in Context.Category
+                            where cat.InstitutionId == item.InstitutionId
+                            select cat).ToList();
+
+            Context.Category.RemoveRange(category);
+
+            foreach (var cat in institution.Categories)
+            {
+                item.Categories.Add(cat);
+            }
 
             return Context.SaveChanges() > 0;
         }
@@ -162,6 +191,17 @@ namespace LinkVoluntario.Infra.Data.Repository
                          select institution);
 
             return query.FirstOrDefault();
+        }
+
+        public void DeletePhoto(int photoId)
+        {
+            var query = (from photo in Context.Photo
+                         where photo.PhotoId == photoId
+                         select photo).First();
+
+            Context.Photo.Remove(query);
+
+            Commit();
         }
     }
 }

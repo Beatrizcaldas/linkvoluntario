@@ -14,5 +14,6 @@ namespace LinkVoluntario.Domain.Interfaces
         Institution GetById(int institutionId);
         Institution GetByPhotoId(int photoId);
         Institution GetByUserEmail(string email);
+        void DeletePhoto(int photoId);
     }
 }

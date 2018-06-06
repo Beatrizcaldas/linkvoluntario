@@ -15,5 +15,6 @@ namespace LinkVoluntario.Domain.Services
         Institution GetByPhotoId(int photoId);
         Institution GetByUserEmail(string email);
         IList<Institution> ListByFilters(IList<string> selectedCategories, string nome, string localidade);
+        void DeletePhoto(int photoId);
     }
 }

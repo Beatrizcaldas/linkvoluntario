@@ -45,9 +45,11 @@ namespace LinkVoluntario.ViewModels
         [Display(Name = "Categorias", Description = "Categorias")]
         public IList<SelectListItem> Categories { get; set; }
         [Required]
-        public IList<int> SelectedCategories { get; set; }
+        public IList<string> SelectedCategories { get; set; }
         [Display(Name = "Fotos", Description = "Fotos")]
         public IList<HttpPostedFileBase> Photos { get; set; }
+
+        public IList<HttpPostedFileBase> NewPhotos { get; set; }
 
         public IList<PhotoViewModel> PhotosModel { get; set; }
     }

@@ -55,5 +55,10 @@ namespace LinkVoluntario.Domain.Services
         {
             return _institutionRepository.GetByUserEmail(email);
         }
+
+        public void DeletePhoto(int photoId)
+        {
+            _institutionRepository.DeletePhoto(photoId);
+        }
     }
 }
