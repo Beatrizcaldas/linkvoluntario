@@ -41,7 +41,7 @@ namespace LinkVoluntario.Controllers
         {
             if (ModelState.IsValid)
             {
-                string body = @"<p style='text-align: justify;'><b>Mensagem de:</b> " + model.Name  + @"</p>
+                string body = @"<p style='text-align: justify;'><b>Mensagem de:</b> " + model.Name + @"</p>
                                 <br>
                                 <p style='text-align: justify;'><b>Assunto:</b> " + model.Subject + @"</p>
                                 <br>
@@ -49,7 +49,7 @@ namespace LinkVoluntario.Controllers
                                 <br><br>
                                 <p style='text-align: justify;'><b>Responder para:</b> <u>" + model.Email + @"</u></p>";
 
-                emailService.SendEmail("contato@linkvoluntario.org", "contato@linkvoluntario.org", "[LinkVoluntario.org] Contato do site", body);
+                emailService.SendEmail("contato@linkvoluntario.org", model.EmailInstitution, "[LinkVoluntario.org] Contato do site", body);
 
                 return View("EmailEnviadoSucesso");
             }
@@ -79,12 +79,12 @@ namespace LinkVoluntario.Controllers
                 new SelectListItem {Text = "Auxílio - Família", Value = "7"}
             };
         }
-        
+
         [HttpPost]
         public ActionResult SearchInstitutions(SearchFilterViewModel filter)
         {
             var lista = institutionService.ListByFilters(filter.SelectedCategories, filter.Nome, filter.Localidade);
-            
+
 
             var model = ParseToResumedViewModel(lista);
 
@@ -102,6 +102,7 @@ namespace LinkVoluntario.Controllers
             retorno.PhotosModel = ParseToPhotoModel(institution.Photos);
             retorno.Phones = ParseToPhoneModel(institution.Phones);
             retorno.Adresses = ParseToAddresModel(institution.Adresses);
+            retorno.Email = institution.User.Email;
 
             return retorno;
         }
@@ -144,14 +145,15 @@ namespace LinkVoluntario.Controllers
         {
             var retorno = new List<PhotoViewModel>();
 
-            foreach (var item in photos)
-            {
-                retorno.Add(new PhotoViewModel
+            if (photos != null)
+                foreach (var item in photos)
                 {
-                    PhotoId = item.PhotoId,
-                    Binary = item.Binary
-                });
-            }
+                    retorno.Add(new PhotoViewModel
+                    {
+                        PhotoId = item.PhotoId,
+                        Binary = item.Binary
+                    });
+                }
 
             return retorno;
         }
@@ -162,18 +164,19 @@ namespace LinkVoluntario.Controllers
 
             foreach (var item in lista)
             {
+                var photo = item.Photos.Count() > 0 ? new List<Photo> { item.Photos.First() } : null;
                 retorno.Add(new InstitutionResumedViewModel
                 {
                     InstitutionId = item.InstitutionId,
                     CNPJ = item.CNPJ,
                     FantasyName = item.FantasyName,
                     Description = item.Description,
-                    PhotosModel = ParseToPhotoModel(new List<Photo> { item.Photos.First() })
+                    PhotosModel = ParseToPhotoModel(photo)
                 });
             }
 
             return retorno;
-        }   
+        }
 
         [HttpGet]
         public FileStreamResult GetImage(int photoId)

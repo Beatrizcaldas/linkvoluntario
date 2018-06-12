@@ -165,7 +165,7 @@ namespace LinkVoluntario.Infra.Data.Repository
                         select item;
             }
 
-            return query.ToList();
+            return query.Distinct().ToList();
         }
 
         public Institution GetById(int institutionId)

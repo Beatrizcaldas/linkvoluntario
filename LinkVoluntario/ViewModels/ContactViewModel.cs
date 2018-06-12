@@ -4,6 +4,7 @@ namespace LinkVoluntario.Controllers
 {
     public class ContactViewModel
     {
+        public string EmailInstitution { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

@@ -13,11 +13,11 @@
         </div>
         <br />
         @*<div>
-            @foreach (var item in Model.Category)
-            {
-                <label>@item.Text</label>
-            }
-        </div>*@
+                @foreach (var item in Model.Category)
+                {
+                    <label>@item.Text</label>
+                }
+            </div>*@
         @foreach (var photo in Model.PhotosModel)
         {
             <img class="card-img-top" src="@Url.Action("GetImage", "Home", new { photoId = photo.PhotoId })" width="286" height="180" alt="Card image cap">
@@ -39,6 +39,7 @@
         <h3 class="text-center">Ficou interessado? Entre em contato!</h3><br />
 
         <form method="post" action="@Url.Action("SendEmail", "Home")">
+            <input type="hidden" name="EmailInstitution" id="EmailInstitution" value="@Model.Email" />
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label for="Name">Seu nome:</label>
